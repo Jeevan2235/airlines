@@ -59,7 +59,7 @@
                 @click:append="show1 = !show1"
               ></v-text-field>
               <v-text-field
-                v-model="info.password"
+                v-model="info.cpassword"
                 :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
                 :rules="[rules.required, rules.min]"
                 :type="show2 ? 'text' : 'password'"
@@ -67,6 +67,7 @@
                 outlined
                 class="mx-3"
                 label="Confirm Password"
+                @click:append="show2 = !show2"
               ></v-text-field>
               <div class="text-center">
                 <v-btn
@@ -74,6 +75,7 @@
                   @click="register"
                   class="white--text mb-5"
                   width="15em"
+                  :disabled="isDisabled"
                 >
                   Sign Up</v-btn
                 >
@@ -103,6 +105,7 @@ export default {
         address: "",
         phone: "",
         password: "",
+        cpassword: "",
       },
       show1: false,
       show2: false,
@@ -112,6 +115,16 @@ export default {
         // emailmatch: () => `the email and password you entered don't match`,
       },
     };
+  },
+  computed: {
+    isDisabled() {
+      return !(
+        this.info.phone.length == 10 &&
+        !isNaN(this.info.phone) &&
+        this.info.password == this.info.cpassword &&
+        this.info.password.length > 0
+      );
+    },
   },
   methods: {
     async register() {

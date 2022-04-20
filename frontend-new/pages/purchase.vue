@@ -104,6 +104,8 @@
 
 <script>
 import swal from "sweetalert2";
+import { jsPDF } from "jspdf";
+
 export default {
   created() {
     if (this.$route.query.id) {
@@ -141,7 +143,27 @@ export default {
           swal.fire("error", "No ticket number", "error");
         }
         await this.$axios.post(this.action, this.ticket).then((response) => {
-          swal.fire("Success", "Ticket Purchase Successful", "success");
+          // swal.fire("Success", "Ticket Purchase Successful", "success");
+          swal
+            .fire({
+              title: "Do you want to save the changes?",
+              showCancelButton: true,
+              confirmButtonText: `Download Ticket`,
+              cancelButtonText: "Ok",
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                var doc = new jsPDF();
+                const lll = response.data.ticket_details;
+                const ppp = { ...lll.flight_details, ...lll };
+                ppp.flight_details = undefined;
+                Object.keys(ppp).forEach((item, i) => {
+                  doc.text(10, 10 + i * 10, `${item}: ${ppp[item]}`);
+                  return item, ppp[item];
+                });
+                doc.save("ticket.pdf");
+              }
+            });
         });
       } catch (err) {
         if (err.response.data.contact_phone) {
