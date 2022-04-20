@@ -176,9 +176,17 @@ export default {
                   doc.text(10, 10 + i * 10, `${item}: ${ppp[item]}`);
                   return item, ppp[item];
                 });
-                doc.save("ticket.pdf");
+                // doc.save("ticket.pdf");
+                window.open(doc.output("bloburl"));
+                window.open(
+                  `http://localhost:8000/bookings/process-payment/${response.data.id}`,
+                  "_blank"
+                );
+                // window.location.href = `http://localhost:8000/bookings/process-payment/${response.data.id}`;
               }
             });
+          // this.$router.push(
+          // );
         });
       } catch (err) {
         if (err.response.data.contact_phone) {

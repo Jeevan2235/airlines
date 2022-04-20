@@ -82,6 +82,7 @@ export default {
           data: { email: this.email, password: this.password },
         });
         let newLocation = new URL(location.toString()).origin;
+        console.log(this.$auth.user.role);
         if (this.$auth.user.role === "STAFF") {
           newLocation += "/admin/booked";
           location.assign(newLocation);

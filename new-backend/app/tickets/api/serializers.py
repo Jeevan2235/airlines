@@ -68,6 +68,7 @@ class FilteredTicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Ticket
         fields = [
+            "id",
             "ticket_class",
             "seat_no",
             "flight",

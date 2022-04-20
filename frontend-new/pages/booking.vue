@@ -176,6 +176,7 @@
                   <v-col class="mt-8">
                     <div class="text-center">
                       <p>{{ flight.price }}</p>
+
                       <router-link
                         :to="{
                           path: '/seat',
