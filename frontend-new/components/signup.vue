@@ -27,6 +27,7 @@
                   class="mx-6 my-2"
                   v-model="info.name"
                   label="Full Name"
+                  v-on:keypress="isLetter"
                 ></v-text-field>
                 <v-text-field
                   outlined
@@ -46,7 +47,10 @@
                 class="mx-3"
                 v-model="info.phone"
                 label="Phone Number"
+                :rules="onlyNum"
+                v-on:keypress="NumbersOnly"
               ></v-text-field>
+
               <v-text-field
                 outlined
                 class="mx-3"
@@ -114,6 +118,13 @@ export default {
         // min: (v) => v.length >= 8 || "min 8 characters",
         // emailmatch: () => `the email and password you entered don't match`,
       },
+      onlyNum: [
+        (v) => {
+          if (isNaN(this.info.phone)) {
+            return "Error";
+          }
+        },
+      ],
     };
   },
   computed: {
@@ -143,6 +154,25 @@ export default {
           swal.fire("error", "please try again later", "error");
         }
       }
+    },
+    async NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
+    isLetter(e) {
+      let char = String.fromCharCode(e.keyCode); // Get the character
+      if (/^[A-Za-z]+$/.test(char)) return true;
+      // Match with regex
+      else e.preventDefault(); // If not match, don't add to input text
     },
   },
 };

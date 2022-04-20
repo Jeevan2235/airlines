@@ -169,7 +169,6 @@ SIMPLE_JWT = {
 AUTH_USER_MODEL = 'accounts.User'
 
 # EMAIL SMTP SETUP
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -177,7 +176,7 @@ EMAIL_HOST_USER = "airlinesreservationsystem46@gmail.com"
 EMAIL_HOST_PASSWORD = "Te$t@123"
 
 
-PAYPAL_RECEIVER_EMAIL = 'pcbusiness46@gmail.com'
+PAYPAL_RECEIVER_EMAIL = 'jsmerchant@email.com'
 
 PAYPAL_TEST = True
 

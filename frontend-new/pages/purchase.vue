@@ -47,6 +47,7 @@
                   outlined
                   v-model="ticket.passenger_document_number"
                   label="Document Number"
+                  v-on:keypress="NumbersOnly"
                 ></v-text-field>
               </v-row>
               <v-row>
@@ -77,6 +78,7 @@
                   class="me-2"
                   v-model="ticket.contact_phone"
                   label="Contact Phone"
+                  v-on:keypress="NumbersOnly"
                 ></v-text-field>
                 <v-text-field
                   outlined
@@ -137,6 +139,19 @@ export default {
     };
   },
   methods: {
+    async NumbersOnly(evt) {
+      evt = evt ? evt : window.event;
+      var charCode = evt.which ? evt.which : evt.keyCode;
+      if (
+        charCode > 31 &&
+        (charCode < 48 || charCode > 57) &&
+        charCode !== 46
+      ) {
+        evt.preventDefault();
+      } else {
+        return true;
+      }
+    },
     async purchaseFlight() {
       try {
         if (!this.ticket.ticket) {
@@ -146,7 +161,7 @@ export default {
           // swal.fire("Success", "Ticket Purchase Successful", "success");
           swal
             .fire({
-              title: "Do you want to save the changes?",
+              title: "Please download the ticket via Download Ticket button",
               showCancelButton: true,
               confirmButtonText: `Download Ticket`,
               cancelButtonText: "Ok",
