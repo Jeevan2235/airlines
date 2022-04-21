@@ -106,7 +106,6 @@
 
 <script>
 import swal from "sweetalert2";
-import { jsPDF } from "jspdf";
 
 export default {
   created() {
@@ -159,25 +158,16 @@ export default {
         }
         await this.$axios.post(this.action, this.ticket).then((response) => {
           // swal.fire("Success", "Ticket Purchase Successful", "success");
+          localStorage.setItem("payment-id", response.data.id);
           swal
             .fire({
               title: "Please download the ticket via Download Ticket button",
               showCancelButton: true,
-              confirmButtonText: `Download Ticket`,
+              confirmButtonText: `Pay`,
               cancelButtonText: "Ok",
             })
             .then((result) => {
               if (result.isConfirmed) {
-                var doc = new jsPDF();
-                const lll = response.data.ticket_details;
-                const ppp = { ...lll.flight_details, ...lll };
-                ppp.flight_details = undefined;
-                Object.keys(ppp).forEach((item, i) => {
-                  doc.text(10, 10 + i * 10, `${item}: ${ppp[item]}`);
-                  return item, ppp[item];
-                });
-                // doc.save("ticket.pdf");
-                window.open(doc.output("bloburl"));
                 window.open(
                   `http://localhost:8000/bookings/process-payment/${response.data.id}`,
                   "_blank"
