@@ -57,25 +57,64 @@ class PurchaseConfirmSerializer(serializers.ModelSerializer):
     """Serializes Purchase Object"""
 
     status = serializers.CharField(write_only=True, required=True)
-    ticket_details = serializers.SerializerMethodField("get_ticket_details")
+    flight_number = serializers.SerializerMethodField("get_flight_number")
+    baggage_limit = serializers.SerializerMethodField("get_baggage_limit")
+    flight_time = serializers.SerializerMethodField("get_flight_time")
+    duration = serializers.SerializerMethodField("get_duration")
+    departure_date = serializers.SerializerMethodField("get_departure_date")
+    arrival_location = serializers.SerializerMethodField("get_arrival_location")
+    departure_location = serializers.SerializerMethodField("get_departure_location")
+    seat_no = serializers.SerializerMethodField("get_seat_no")
 
-    def get_ticket_details(self, obj):
-        return TicketSerializer(obj.ticket).data
+    def get_seat_no(self, obj):
+        return obj.ticket.seat_no
+
+    def get_departure_location(self, obj):
+        return obj.ticket.flight.departure_location
+
+    def get_arrival_location(self, obj):
+        return obj.ticket.flight.arrival_location
+
+    def get_departure_date(self, obj):
+        return obj.ticket.flight.departure_date
+
+    def get_duration(self, obj):
+        return obj.ticket.flight.duration
+
+    def get_flight_time(self, obj):
+        return obj.ticket.flight.flight_time
+
+    def get_baggage_limit(self, obj):
+        return obj.ticket.flight.baggage_limit
+
+    def get_flight_number(self, obj):
+        return obj.ticket.flight.flight_number
 
     class Meta:
         model = Purchase
-        fields = "__all__"
+        fields = [
+            "passenger_name",
+            "flight_number",
+            "baggage_limit",
+            "flight_time",
+            "duration",
+            "departure_date",
+            "arrival_location",
+            "departure_location",
+            "seat_no",
+            "is_paid",
+            "status",
+        ]
         read_only_fields = (
             "passenger_name",
-            "passenger_gender",
-            "passenger_document_type",
-            "passenger_document_number",
-            "passenger_nationality",
-            "contact_name",
-            "contact_gender",
-            "contact_phone",
-            "contact_email",
-            "ticket",
+            "flight_number",
+            "baggage_limit",
+            "flight_time",
+            "duration",
+            "departure_date",
+            "arrival_location",
+            "departure_location",
+            "seat_no",
             "is_paid",
         )
         write_only_fields = ("status",)
