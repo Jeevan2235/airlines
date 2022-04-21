@@ -55,6 +55,15 @@ class PurchaseTicketViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class PurchaseConfirmViewSet(viewsets.ModelViewSet):
+    """API Views for Confirming Purchasing Tickets in the System"""
+
+    queryset = models.Purchase.objects.all()
+    serializer_class = serializers.PurchaseConfirmSerializer
+    permission_classes = (AllowAny,)
+    http_method_names = ["patch"]
+
+
 class CurrentPurchasesViewSet(viewsets.ModelViewSet):
     """API Views for Getting Purchased Tickets in the System"""
 

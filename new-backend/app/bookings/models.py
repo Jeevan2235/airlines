@@ -54,6 +54,7 @@ class Purchase(models.Model):
     ticket = models.ForeignKey(
         Ticket, related_name="purchase", on_delete=models.CASCADE
     )
+    is_paid = models.BooleanField(default=False)
 
     def get_total(self):
         return self.ticket.price.amount
