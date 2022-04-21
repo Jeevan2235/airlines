@@ -71,14 +71,15 @@ export default {
     },
     async payment() {
       try {
-        const response = await this.$axios.patch(this.action + this.paymentid, {
-          status: this.status,
-        });
+        const response = await this.$axios.patch(
+          `${this.action}${this.paymentid}/`,
+          {
+            status: this.status,
+          }
+        );
 
         var doc = new jsPDF();
-        const lll = response.data.ticket_details;
-        const ppp = { ...lll.flight_details, ...lll };
-        ppp.flight_details = undefined;
+        const ppp = response.data;
         Object.keys(ppp).forEach((item, i) => {
           doc.text(10, 10 + i * 10, `${item}: ${ppp[item]}`);
           return item, ppp[item];
@@ -86,6 +87,7 @@ export default {
         // doc.save("ticket.pdf");
         window.open(doc.output("bloburl"));
       } catch (err) {
+        console.log(err);
         swal.fire("error", "please try again later", "error");
       } finally {
         localStorage.removeItem("payment-id");
