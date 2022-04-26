@@ -33,6 +33,14 @@
             /></client-only>
           </v-col>
           <v-col cols="12" md="2">
+            <v-card-text>Nationality</v-card-text>
+            <v-select
+              :items="nationality"
+              :clearable="false"
+              v-model="values.nationality"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="2">
             <v-card-text class="text-subtitle-1">Adult</v-card-text>
             <!-- <v-select :items="items" outlined label="2"></v-select> -->
             <v-select
@@ -228,7 +236,7 @@ export default {
   data: () => ({
     links: ["4AM-9AM", "6AM-9AM", "3AM-9AM", "4AM-9AM"],
     things: ["4AM-9AM", "6AM-9AM", "3AM-9AM", "4AM-9AM"],
-
+    nationality: ["nepalese", "vietnamese", "indian", "american"],
     adult: ["1", "2", "3", "4"],
     child: ["1", "2", "3", "4"],
     from: ["Pokhara", "Kathmandu", "Biratnagar", "Birgunj", "Bhojpur"],

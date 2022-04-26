@@ -44,6 +44,16 @@
         ></v-select>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <v-card-text>Nationality</v-card-text>
+        <v-select
+          :items="nationality"
+          :clearable="false"
+          v-model="values.nationality"
+        ></v-select>
+      </v-col>
+    </v-row>
     <v-row style="margin-bottom: 4em">
       <v-col cols="12" md="4">
         <v-card-text>Adult</v-card-text>
@@ -101,6 +111,7 @@ export default {
   data: function () {
     return {
       format: "yyyy-MM-dd",
+      nationality: ["nepalese", "vietnamese", "indian", "american"],
       adult: ["1", "2", "3", "4"],
       child: ["1", "2", "3", "4"],
       from: ["Pokhara", "Kathmandu", "Biratnagar", "Birgunj", "Bhojpur"],
